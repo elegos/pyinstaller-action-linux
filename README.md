@@ -6,6 +6,8 @@ To build your application, you need to specify where your source code is via the
 
 The source code directory should have your `.spec` file that PyInstaller generates. If you don't have one, you'll need to run PyInstaller once locally to generate it. Also if you have another program `.spec` file you can set specific pyinstaller `.spec` file by `spec: <YOUR_SPEC_FILE_NAME>`
 
+If the `src` folder has a `Pipfile.lock` file not `requirements.txt`, a `requirements.txt` file will be automatically generated.
+
 If the `src` folder has a `requirements.txt` file, the packages will be installed into the environment before PyInstaller runs.
 
 If you wish to specify a package mirror, this is possibly via the `pypi_url` and/or the `pypi_index_url`, these defaults are:
@@ -13,17 +15,13 @@ If you wish to specify a package mirror, this is possibly via the `pypi_url` and
 - `pypi_url` = `https://pypi.python.org/`
 - `pypi_index_url` = `https://pypi.python.org/simple`
 
-If the application requires `Tkinter`, ensure to use the `tkinter` branch of this repository (eg JackMcKew/pyinstaller-action-linux@tkinter), as this will undergo the steps to install `tkinter` and please set the `tkinter` argument to true (this is under the `with` similar to how path is defined). Note that this will slow the action down considerably as Python will need to be uninstalled & rebuilt once `tkinter` is installed
-
-> If you are using the default Python `gitignore` file, ensure to remove `.spec`
-
 ## Example usage
 
 Include this in your `.github/workflows/main.yaml`:
 
 ```yaml
 - name: PyInstaller Linux
-  uses: JackMcKew/pyinstaller-action-linux@main
+  uses: elegos/pyinstaller-action-linux@main
     with:
       path: src
 ```
@@ -54,7 +52,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Package Application
-      uses: JackMcKew/pyinstaller-action-linux@main
+      uses: elegos/pyinstaller-action-linux@main
       with:
         path: src
 
@@ -65,5 +63,8 @@ jobs:
 ```
 
 ## Sources
+
+This is a fork of [JackMcKew's PyInstaller-action-linux](https://github.com/JackMcKew/pyinstaller-action-linux). I've forked it to adapt to my needs (i.e. Python 3.9, added some missing libs etc).
+### JackMcKew
 
 A big thank you to all the contributors over at <https://github.com/cdrx/docker-pyinstaller>, this action is just a modified version of their docker container, thank you!
